@@ -1,6 +1,4 @@
 # django-project-user
-implement user login,logout,signup so on..
-
 
 I have recently been studying website implementation through a framework called django.
 
