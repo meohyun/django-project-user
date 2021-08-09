@@ -4,5 +4,5 @@ I have recently been studying website implementation through a framework called 
 
 This time, we are going to implement user functions through django.
 
-kky => projcet name\n
+kky => projcet name/ 
 trade = > app name
