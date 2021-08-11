@@ -8,4 +8,5 @@ class UserForm(forms.ModelForm):
     
     def signup(self,request,user):
       user.nickname = self.cleaned_data["nickname"]
+      user.kakao_id = self.cleaned_data["kakao_id"]
       user.save()
