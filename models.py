@@ -8,3 +8,7 @@ class User(AbstractUser):
         unique = True,
         null = True,
         error_messages = {'unique':'중복된 nickname 입니다.'})
+    kakao_id = models.CharField(
+        max_length = 20,
+        null = True,
+        validator = [])
