@@ -11,4 +11,4 @@ class User(AbstractUser):
     kakao_id = models.CharField(
         max_length = 20,
         null = True,
-        validator = [validate_no_special_characters])
+        validators = [validate_no_special_characters])
