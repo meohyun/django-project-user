@@ -12,3 +12,9 @@ class User(AbstractUser):
         max_length = 20,
         null = True,
         validators = [validate_no_special_characters])
+    # override
+    username = models.CharField(
+        max_length = 25,
+        null = True,
+        unique = False,
+        validators = [validate_no_special_characters])
