@@ -1,20 +1,20 @@
-{% extends "coplate_base/base.html" %}
+{% extends "kky_base/base.html" %}
 
 {% load static %}
 
 {% block header %}
 <header class="site-header navbar">
   <div class="content max-width">
-    <a href="#">
-      <img class="logo" src="{% static 'coplate/assets/coplate-logo.svg' %}" alt="Coplate Logo">
+    <a href="{% url 'index' %}">
+      <img class="logo" src="{% static 'coplate/assets/kky-logo.jpg' %}" alt="kky Logo">
     </a>
     <nav>
       <ul class="navbar">
         {% if user.is_authenticated %}
-          <li><a href="#">로그아웃</a></li>
+          <li><a href="{% url 'account-logout' %}">로그아웃</a></li>
         {% else %}
-          <li><a href="#">로그인</a></li>
-          <li><a href="#">회원가입</a></li>
+          <li><a href="{% url 'account-login' %}">로그인</a></li>
+          <li><a href="{% url 'account-signup' %}">회원가입</a></li>
         {% endif %}
       </ul>
     </nav>
