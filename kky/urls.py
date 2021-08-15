@@ -19,7 +19,6 @@ from django.urls import path,include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("trade.urls")),
-    path('',include('allauth.urls')),
     path(
         'email_confirmation-done/',
         TemplateView.as_view(template_name="trade/email_confirmation_done.html",)
@@ -30,4 +29,5 @@ urlpatterns = [
         CustomPasswordChangeView.as_view(),
         name = "account_password_change"
     ),
+    path('',include('allauth.urls')),
 ]
