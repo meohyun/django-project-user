@@ -1,15 +1,16 @@
-{% extends "kky_base/base.html" %}
+{% extends "coplate_base/base.html" %}
 
 {% load static %}
+{% load widget_tweaks %}
 
-{% block title %}회원가입 | Coplate{% endblock title %}
+{% block title %}회원가입 | 국경연{% endblock title %}
 
 {% block content %}
 <div class="account-background">
   <main class="account">
     <div class="title">
       <a href="{% url 'index' %}">
-        <img class="logo" src="{% static 'coplate/assets/kky-logo.jpg' %}" alt="kky Logo">
+        <img class="logo" src="{% static 'trade/assets/kky-logo.jpg' %}" alt="kky Logo">
       </a>
     </div>
 
@@ -18,32 +19,38 @@
       <div>
         {{form.email|add_class:"cp-input"|attr:"placeholder:이메일"|add_error_class:"error"}}
         {% for error in form.email.errors %}
-          <div class="error-message">{{error}}</div>
+          <div class = "error-message">{{error}}</div>
         {% endfor %}
       </div>
       <div>
-        {{form.nickname|add_class:"cp-input"|attr:"placeholder:닉네임 (학번+이름으로 적어주세요.)"|add_error_class:"error"}}
+        {{form.nickname|add_class:"cp-input"|attr:"placeholder: 닉네임"|add_error_class:"error"}}
         {% for error in form.nickname.errors %}
-          <div class="error-message">{{error}}</div>
+          <div class = "error-message">{{error}}</div>
+        {% endfor %}
+      </div>
+      <div>
+        {{form.student_number|add_class:"cp-input"|attr:"placeholder: 학번을 입력하세요."|add_error_class:"error"}}
+        {% for error in form.student_number.errors %}
+          <div class = "error-message">{{error}}</div>
         {% endfor %}
       </div>
       <div>
         {{form.password1|add_class:"cp-input"|attr:"placeholder:비밀번호"|add_error_class:"error"}}
         {% for error in form.password1.errors %}
-          <div class="error-message">{{error}}</div>
+          <div class = "error-message">{{error}}</div>
         {% endfor %}
       </div>
       <div>
         {{form.password2|add_class:"cp-input"|attr:"placeholder:비밀번호 확인"|add_error_class:"error"}}
         {% for error in form.password2.errors %}
-          <div class="error-message">{{error}}</div>
+          <div class = "error-message">{{error}}</div>
         {% endfor %}
       </div>
       <button class="cp-button" type="submit">회원가입</button>
     </form>
 
     <div class="info">
-      이미 회원이신가요?<a class="link" href="{% url 'account-login' %}">로그인</a>
+      이미 회원이신가요?<a class="link" href="{% url 'account_login' %}">로그인</a>
     </div>
   </main>
 </div>
