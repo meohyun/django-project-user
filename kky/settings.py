@@ -127,6 +127,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_ROOT = os.path.join(BASE_DIR,'zokbo')
+MEDIA_URL = '/zokbo-update/'
+
 
 AUTH_USER_MODEL = 'trade.User'
 
@@ -142,6 +145,7 @@ ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = (
     "account_email_confirmation_done"
 )
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = "account_email_confirmation_done"
+ACCOUNT_EMAIL_SUBJECT_PREFIX = ""
 
 
 
