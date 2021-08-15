@@ -48,3 +48,9 @@ class CustomPasswordValidator:
 def validate_no_special_characters(value):
     if contains_special_character(value):
         raise ValidationError("특수문자를 포함할 수 없습니다.")
+
+
+def validate_student_number(value):
+    if value < 20000000 or value > 24000000 :
+        raise ValidationError("올바른 학번을 입력해주세요.")
+        
