@@ -1,0 +1,35 @@
+{% extends 'coplate_base/base_with_navbar.html'%}
+{% block content %}
+<div class = 'review-detail'>
+    <div class = 'review-info'>
+        <div class = 'title'>
+            <p>제목 : {{post.class_name}}</p>
+            <date class="date">날짜: {{post.dt_created|date:"Y년 n월 j일"}}</date>
+        <div>
+        <div class = 'author'>
+            <p> 작성자 : {{post.author.email}}</p>
+        <div> 
+            <p> 교수님 성함: {{post.professor_name}}</p>
+        </div>
+        <div>
+            <div>
+                <span>
+                    평점:
+                    {% for i in ""|ljust:post.grade %}
+                            ★
+                    {% endfor %}
+                </span>
+            </div>
+        <div>
+            <p> 다운로드 링크: {{post.file}}</p>
+        </div>
+        
+    </div>
+    <div class= 'content'>
+        <p>수업 한줄평: {{post.content|linebreaks}}</p>
+    </div>
+        <div class = 'footer'>
+            <a href = "{% url 'index' %}">돌아가기</a>
+        </div>
+</div>
+{% endblock content %}
