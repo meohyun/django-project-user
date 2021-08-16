@@ -1,0 +1,27 @@
+{% extends 'coplate_base/base_with_header.html'%}
+{% block content %}
+    <form method= "POST">{% csrf_token %}
+    <div class= "review-form">
+        <div>
+            수업명 : {{form.class_name}}
+        </div> 
+        <div>
+            교수명 : {{form.professor_name}}
+        </div> 
+        <div>
+            평점 : {{form.grade}}
+        </div>
+        <div>
+            파일올리기 : {{form.file}}
+        </div>
+        <div class = "textarea">
+        한줄평: {{form.content}}
+        </div>
+        <div class ="submit">
+            <input type="submit" value ="작성완료">
+        </div>
+         <div class = "rating">
+            <a href = "{% url 'index' %}">돌아가기</a>
+        </div>
+    </div> 
+{% endblock content %}
