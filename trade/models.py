@@ -32,10 +32,11 @@ class Post(models.Model):
     class_name = models.CharField(max_length=20, validators=[validate_no_special_characters])
     professor_name = models.CharField(max_length=10,validators=[validate_no_special_characters])
     GRADE_CHOICE =[
-        (1,1),
-        (2,2),
-        (3,3),
-        (4,4),
+        (1,★),
+        (2,★★),
+        (3,★★★),
+        (4,★★★★),
+        (5,★★★★★),
     ]
     grade = models.IntegerField(choices=GRADE_CHOICE)
     file = models.FileField(upload_to='zokbo')
