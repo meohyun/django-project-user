@@ -30,6 +30,8 @@
     </div>
         <div class = 'footer'>
             <a href = "{% url 'index' %}">돌아가기</a>
+            <a href = {% url 'update' post.id %}>수정하기</a>
+            <a href = {% url 'delete' post.id %}>삭제하기</a>
         </div>
 </div>
 {% endblock content %}
