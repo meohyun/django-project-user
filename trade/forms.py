@@ -16,10 +16,6 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = Post
         fields = ["class_name","professor_name","grade","file",'content']
-
-        def create_post(self,request,post):
-            post.class_name = self.class_name['class_name']
-            post.professor_name = self.class_name['professor_name']
-            post.grade = self.class_name['grade']
-            post.file = self.class_name['file']
-            post.content = self.class_name['content']
+        widgets = {
+            'grade' : forms.RadioSelect
+        }
