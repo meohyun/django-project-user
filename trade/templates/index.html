@@ -32,6 +32,23 @@
             <br>
             <a href = "{% url 'index' %}">타이핑마당</a>
             </div>
+            {% for post in posts %}
+
+          <div class = "content-list">
+            <div class ="content">
+                <div class = "body">
+                  <a href = "{% url 'detail' post.id %}">{{post.class_name}}</a>
+                </div>
+                <div>
+                작성자: {{post.author.email}}
+                </div>
+
+              {% empty %}
+                <p class = "body">등록된 글이 없어요!</p>
+              {% endfor %}
+              
+            </div>
+          </div>
           </div>
         {% else %}
             <p>로그인을 해주세요.</p>
@@ -48,25 +65,9 @@
 </div>
 {% endif %}
 
-{% for post in posts %}
-<div class = "content-list">
-  <div class ="content">
-      <p class = "title">
-        <a href = "{% url 'detail' post.id %}">{{post.class_name}}</a>
-      </p>
-      <div>
-      작성자: {{post.author.email}}
-      </div>
-
-    {% empty %}
-      <p class = "body">등록된 글이 없어요!</p>
-    {% endfor %}
-    
-  </div>
-</div>
-
-
-
 {% endblock content %}    
+
+
+
 
 
