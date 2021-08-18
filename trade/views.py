@@ -60,7 +60,15 @@ class DeleteZokboView(DeleteView):
     def get_success_url(self):
         return reverse('index')
 
-    
+ def download(request,path):
+    file_path = os.path.join(settings.MEDIA_ROOT,path)
+    if os.path.exists(file_path):
+        with open(file_path,'rb',encoding='cp949') as fh:
+            response = HttpResponse(fh.read(),content_type="application/upload_files")
+            response['Content-Disposition']= 'inline;filename='+ os.path.basename(file_path)
+            return response
+    raise Http404   
+          
     
         
     
