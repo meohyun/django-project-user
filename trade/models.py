@@ -39,7 +39,7 @@ class Post(models.Model):
         (5,★★★★★),
     ]
     grade = models.IntegerField(choices=GRADE_CHOICE)
-    file = models.FileField(upload_to='zokbo')
+    upload_files = models.FileField(upload_to='zokbo')
     content = models.TextField()
     dt_created = models.DateTimeField(auto_now_add=True)
     dt_updated = models.DateTimeField(auto_now=True)
