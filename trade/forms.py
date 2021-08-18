@@ -15,7 +15,7 @@ class UserForm(forms.ModelForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ["class_name","professor_name","grade","file",'content']
+        fields = ["class_name","professor_name","grade","upload_files",'content']
         widgets = {
             'grade' : forms.RadioSelect
         }
