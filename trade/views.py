@@ -52,20 +52,33 @@ class CreateZokboView(LoginRequiredMixin,CreateView):
     def get_success_url(self):
         return reverse('detail',kwargs={'pk':self.object.id})
     
-class UpdateZokboView(UpdateView):
+class UpdateZokboView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
     model = Post
     form_class = PostForm
     template_name = 'trade/form.html'
     
+    raise_exception = True
+    
     def get_success_url(self):
         return reverse('detail',kwargs={'pk':self.object.id}
+                       
+    def test_func(self,user):
+        review = self.get_object()
+        return review.author == user
 
-class DeleteZokboView(DeleteView):
+class DeleteZokboView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
     model = Post
     template_name = 'trade/detail_confirm_delete.html'
 
+    raise_exception = True                  
+                                    
     def get_success_url(self):
-        return reverse('index')
+        return reverse('index')  
+     
+    def test_func(self,user):
+        review = self.get_object()
+        return review.author == user
+                                    
 
  def download(request,path):
     file_path = os.path.join(settings.MEDIA_ROOT,path)
