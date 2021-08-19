@@ -5,6 +5,7 @@ from django.views.generic import (
     DetailView,
     UpdateView,
     DeleteView,
+    TemplateView,
 )
 from django.urls import reverse
 from trade.models import Post
