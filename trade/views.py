@@ -52,6 +52,18 @@ class CreateZokboView(LoginRequiredMixin,CreateView):
     def get_success_url(self):
         return reverse('detail',kwargs={'pk':self.object.id})
     
+    def upload_file(request):
+        if request.method == 'POST':
+            form = PostForm(request.POST, request.FILES)
+            if form.is_valid():
+                # file is saved
+                form.save()
+                return HttpResponseRedirect('detail')
+        else:
+            form = PostForm()
+        return render(request, 'detail.html', {'form': form})
+    
+    
 class UpdateZokboView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
     model = Post
     form_class = PostForm
