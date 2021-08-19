@@ -10,6 +10,9 @@ from django.urls import reverse
 from trade.models import Post
 from trade.forms import PostForm
 from allauth.account.views import PasswordChangeView
+from allauth.account.models import EmailAddress
+from braces.views import LoginRequiredMixin,UserPassesTestMixin
+from .functinos import confirmation_required_redirect
 
 # Create your views here.
 
@@ -33,10 +36,13 @@ class DetailZokboView(DetailView):
     template_name = 'trade/detail.html'
     
 
-class CreateZokboView(CreateView):
+class CreateZokboView(LoginRequiredMixin,CreateView):
     model = Post
     form_class = PostForm
     template_name = 'trade/form.html'
+    
+    redirect_unauthenticated_users = True
+    raise_exception = confirmation_required_redirect
     
     def form_valid(self,form):
         form.instance.author = self.request.user
