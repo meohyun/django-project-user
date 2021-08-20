@@ -34,19 +34,17 @@
             </div>
             {% for post in posts %}
 
-          <div class = "content-list">
-            <div class ="content">
-                <div class = "body">
+          <div>
+            <div>
+                <div>
                   <a href = "{% url 'detail' post.id %}">{{post.class_name}}</a>
                 </div>
-                <div>
-                작성자: {{post.author.email}}
-                </div>
-
+                <div class = "review-author">
+                  <div class = "cp-avatar" style="background-image:url('{{post.author.profile_pic.url}}')"></div>
+                  <span> {{post.author.username}}</span>
               {% empty %}
                 <p class = "body">등록된 글이 없어요!</p>
               {% endfor %}
-              
             </div>
           </div>
           </div>
@@ -66,6 +64,8 @@
 {% endif %}
 
 {% endblock content %}    
+
+
 
 
 
