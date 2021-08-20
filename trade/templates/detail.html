@@ -1,14 +1,15 @@
 {% extends 'coplate_base/base_with_navbar.html'%}
 {% block content %}
 <div class = 'review-detail'>
+    <div class = "review-author">
+            <div class = "cp-avatar" style="background-image:url('{{post.author.profile_pic.url}}')"></div>
+            <span> {{post.author.username}}</span>
+        </div>
     <div class = 'review-info'>
         <div class = 'title'>
             <p>제목 : {{post.class_name}}</p>
             <date class="date">날짜: {{post.dt_created|date:"Y년 n월 j일"}}</date>
         <div>
-        <div class = 'author'>
-            <p> 작성자 : {{post.author.email}}</p>
-        <div> 
             <p> 교수님 성함: {{post.professor_name}}</p>
         </div>
         <div>
@@ -21,8 +22,12 @@
                 </span>
             </div>
         <div>
-            <p> 다운로드 링크: {{post.file}}</p>
+        {% if post.upload_files.url %}
+            첨부파일 : <a href = "{{post.upload_files.url}}" download="{{post.upload_files.url}}">{{post.upload_files}}</a>
+        {% endif %}
+        <div>
         </div>
+
         
     </div>
     <div class= 'content'>
@@ -30,8 +35,10 @@
     </div>
         <div class = 'footer'>
             <a href = "{% url 'index' %}">돌아가기</a>
-            <a href = {% url 'update' post.id %}>수정하기</a>
-            <a href = {% url 'delete' post.id %}>삭제하기</a>
+            {% if post.author == user %}
+                <a href = {% url 'update' post.id %}>수정하기</a>
+                <a href = {% url 'delete' post.id %}>삭제하기</a>
+            {% endif %}
         </div>
 </div>
 {% endblock content %}
