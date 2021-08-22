@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.views.generic import (
     ListView,
     CreateView,
@@ -91,7 +91,33 @@ class DeleteZokboView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
         review = self.get_object()
         return review.author == user
                                     
-
+class ProfileView(DetailView):
+    model = User
+    template_name = 'trade/profile.html'
+    pk_url_kwargs = 'user_id'
+    context_object_name = 'profile_user'            
+                                    
+    def get_context_data(self,**kwargs):
+        context = super().get_context(**kwargs)
+        user_id = self.kwargs.get(user_id)
+        context['user_posts'] = Post.objects.filter(author_id=user_id).order_by('-dt_created')[:4]
+        return context
+ 
+class UserReivewListView(ListView):
+    model = Post
+    template_name = 'trade/user_review_list.html'
+    context_object_name = 'user_posts'       
+    paginate_by = 4
+    
+    def get_queryset(self):
+        user_id = self.kwargs.get('user_id')
+        return Post.objects.filter(author_id=user_id).order_by('-dt_created')         
+    
+    def get_context_data(self,**kwargs):
+        context = super().get_context(**kwargs)
+        context['profile_user'] = get_object_or_404(User,id= self.kwargs.get('user_id'))
+        return context                   
+                       
  def download(request,path):
     file_path = os.path.join(settings.MEDIA_ROOT,path)
     if os.path.exists(file_path):
