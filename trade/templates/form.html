@@ -1,26 +1,32 @@
-{% extends 'coplate_base/base_with_header.html'%}
+{% extends 'kky_base/base_with_navbar.html'%}
+
+{% block widgets %}
+<div class = "ul">
+  <div class = "navbar li">
+    <a href = "{% url 'list' %}">족보마당</a>
+    <br>
+    <a href = "{% url 'index' %}">건의 게시판</a>
+{% endblock widgets%}
+
 {% block content %}
-    <form method= "POST">{% csrf_token %}
+    <form method= "POST" enctype="multipart/form-data">{% csrf_token %}
     <div class= "review-form">
-        <div>
+        <div class = 'cp-input'>
             수업명 : {{form.class_name}}
-        </div> 
-        <div>
             교수명 : {{form.professor_name}}
-        </div> 
-        <div>
+            한줄평: {{form.content}}
+        </div>  
+        <navbar>
             평점 : {{form.grade}}
+        </navbar>
         </div>
         <div>
-            파일올리기 : {{form.file}}
-        </div>
-        <div class = "textarea">
-        한줄평: {{form.content}}
+            파일올리기 : {{form.upload_files}}
         </div>
         <div class ="submit">
             <input type="submit" value ="작성완료">
         </div>
-         <div class = "rating">
+        <div class = "rating">
             <a href = "{% url 'index' %}">돌아가기</a>
         </div>
     </div> 
