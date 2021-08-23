@@ -23,7 +23,7 @@ def index(request):
 
 class CustomPasswordChangeView(PasswordChangeView):
     def get_success_url(self):
-        return reverse('index')
+        return reverse('profile',kwargs={'user_id':self.request.user.id})
 
 class IndexView(ListView):
     model = Post 
@@ -116,7 +116,30 @@ class UserReivewListView(ListView):
     def get_context_data(self,**kwargs):
         context = super().get_context(**kwargs)
         context['profile_user'] = get_object_or_404(User,id= self.kwargs.get('user_id'))
-        return context                   
+        return context  
+                       
+class ProfileSetView(LoginRequiredMixin,UpdateView):
+    model = User
+    form_class = ProfileForm
+    template_name = 'trade/profile_set_form.html'
+
+    def get_object(self,queryset=None):
+        return self.request.user
+    
+    def get_success_url(self):
+        return reverse('index')
+
+class ProfileUpdateView(LoginRequiredMixin,UpdateView):
+    model = User
+    form_class = ProfileForm
+    template_name = 'trade/profile_update_form.html'
+
+    def get_object(self,queryset=None):
+        return self.request.user
+    
+    def get_success_url(self):
+        return reverse('profile',kwargs=({'user_id':self.request.user.id}))                              
+                       
                        
  def download(request,path):
     file_path = os.path.join(settings.MEDIA_ROOT,path)
