@@ -1,4 +1,4 @@
-{% extends "coplate_base/base.html" %}
+{% extends "kky_base/base.html" %}
 
 {% load static %}
 {% load widget_tweaks %}
@@ -25,6 +25,12 @@
       <div class="nickname">
         {{ form.nickname|add_class:"cp-input"|add_error_class:"error"|attr:"placeholder:닉네임" }}
         {% for error in form.nickname.errors %}
+          <div class="error-message">{{ error }}</div>
+        {% endfor %}
+      </div>
+      <div class="nickname">
+        {{ form.student_number|add_class:"cp-input"|add_error_class:"error"|attr:"placeholder:학번" }}
+        {% for error in form.student_number.errors %}
           <div class="error-message">{{ error }}</div>
         {% endfor %}
       </div>
