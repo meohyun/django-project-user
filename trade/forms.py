@@ -19,3 +19,17 @@ class PostForm(forms.ModelForm):
         widgets = {
             'grade' : forms.RadioSelect
         }
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'nickname',
+            'profile_pic',
+            'intro'
+        ]
+        widgets = {
+            'intro':forms.Textarea
+        }
+        
+        
