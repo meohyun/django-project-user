@@ -65,6 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'trade.middleware.ProfileSetupMiddleware',
 ]
 
 ROOT_URLCONF = 'kky.urls'
@@ -133,13 +134,13 @@ MEDIA_URL = '/zokbo/'
 
 AUTH_USER_MODEL = 'trade.User'
 
-ACCOUNT_SIGNUP_REDIRECT_URL = "index"
+ACCOUNT_SIGNUP_REDIRECT_URL = "profile-set"
 LOGIN_REDIRECT_URL = "index"
 ACCOUNT_LOGOUT_ON_GET = True
 ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_SIGNUP_FORM_CLASS = "trade.forms.UserForm"
+# ACCOUNT_SIGNUP_FORM_CLASS = "trade.forms.UserForm"
 ACCOUNT_PASSWORD_INPUT_RENDER_VALUE = True
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = (
     "account_email_confirmation_done"
