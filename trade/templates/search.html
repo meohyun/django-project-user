@@ -1,0 +1,31 @@
+{% extends 'coplate_base/base_with_navbar.html'%}
+{% load static %}
+
+<head>
+  <meta charset="UTF-8">
+  <title>검색결과 | 국경연 </title>
+  <link rel="stylesheet" href="{% static 'trade/styles/style.css' %}">
+</head>
+{% block content %}
+
+    {% if not posts %}
+
+        <h1>검색 결과가 없습니다</h1>
+
+    {% else %}
+
+        {% for post in posts.all %}
+        <div class="content-list"> 
+            <div class = "content">
+                <h1>{{ post.class_name }}</h1>
+                <p>{{ post.professor_name }}</p>
+                <p>{{ post.dt_created | date:"Y-m-d" }}</p>
+                <p>{{ post.content }}<a href="{% url 'detail' post.id %}"> ...자세히 보기</a></p> 
+            </div>
+        </div>
+        <br>
+        {% endfor %}
+
+    {% endif %}
+
+{% endblock %}
