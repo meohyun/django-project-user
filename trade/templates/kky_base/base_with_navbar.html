@@ -6,15 +6,17 @@
 <header class="site-header navbar">
   <div class="content max-width">
     <a href="{% url 'index' %}">
-      <img class="logo" src="{% static 'coplate/assets/kky-logo.jpg' %}" alt="kky Logo">
+      <img class="logo" src="{% static 'trade/assets/kky-logo.jpg' %}" alt="kky Logo">
     </a>
     <nav>
       <ul class="navbar">
         {% if user.is_authenticated %}
-          <li><a href="{% url 'account-logout' %}">로그아웃</a></li>
+          <li><a href="{% url 'account_logout' %}">로그아웃</a></li>
+          <li><a href = "{% url 'profile' user.id %}">내 프로필</a></li>
+          <li><a href = "{% url 'create' %}">족보 올리기</a></li>
         {% else %}
-          <li><a href="{% url 'account-login' %}">로그인</a></li>
-          <li><a href="{% url 'account-signup' %}">회원가입</a></li>
+          <li><a href="{% url 'account_login' %}">로그인</a></li>
+          <li><a href="{% url 'account_signup' %}">회원가입</a></li>
         {% endif %}
       </ul>
     </nav>
@@ -22,11 +24,24 @@
 </header>
 {% endblock header %}
 
+{% block content %}
+{% endblock content %}
+
+{% block widgets %}
+<div class = "ul">
+  <div class = "navbar li">
+    <li><a href = "{% url 'list' %}">족보마당</a></li>
+    <br>
+    <li><a href = "{% url 'index' %}">건의 게시판</a></li>
+    <br>
+    <li><a href ={% url 'create' %}>글쓰기</a></li>
+{% endblock widgets%}
+
 {% block footer %}
 <footer class="site-footer">
   <div class="max-content-width content">
     <div></div>
-    <div>COPLATE</div>
+    <div></div>
   </div>
 </footer>
 {% endblock footer %}
