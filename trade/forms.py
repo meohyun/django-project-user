@@ -1,6 +1,6 @@
 from django import forms
-from .models import User,Post
-
+from django.forms import widgets
+from .models import User,Post,Comment
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -8,18 +8,18 @@ class PostForm(forms.ModelForm):
         fields = ["class_name","professor_name","grade","upload_files",'content']
         widgets = {
             'grade' : forms.RadioSelect
+            
         }
 
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = [
-            'nickname',
-            'profile_pic',
-            'intro'
-        ]
+        fields = ['nickname','profile_pic','intro','student_number']
         widgets = {
-            'intro':forms.Textarea
+            'intro' : forms.Textarea
         }
-        
-        
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['comment']
