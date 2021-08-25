@@ -3,8 +3,8 @@
 <div class = 'review-detail'>
     <div class = "review-author">
             <div class = "cp-avatar" style="background-image:url('{{post.author.profile_pic.url}}')"></div>
-            <span> {{post.author.username}}</span>
-        </div>
+                <a href= "{% url 'profile' post.author.id %}">{{post.author.username}}</a>
+            </div>
     <div class = 'review-info'>
         <div class = 'title'>
             <p>제목 : {{post.class_name}}</p>
@@ -25,20 +25,43 @@
         {% if post.upload_files.url %}
             첨부파일 : <a href = "{{post.upload_files.url}}" download="{{post.upload_files.url}}">{{post.upload_files}}</a>
         {% endif %}
+
         <div>
         </div>
 
-        
     </div>
     <div class= 'content'>
         <p>수업 한줄평: {{post.content|linebreaks}}</p>
     </div>
         <div class = 'footer'>
             <a href = "{% url 'index' %}">돌아가기</a>
+            {% if post.author.is_authenticated %}
+                <a href = "{% url 'comment-new' post.pk %}">댓글쓰기</a>
+            {% endif %}
             {% if post.author == user %}
                 <a href = {% url 'update' post.id %}>수정하기</a>
                 <a href = {% url 'delete' post.id %}>삭제하기</a>
             {% endif %}
         </div>
+    <ul>
+        {% for comment in post.comment_set.all %}
+            <li>
+            <div class = "review-author">
+                {% if comment.dt_updated %}
+                    {{comment.dt_updated}}&nbsp;
+                {% else %}
+                    {{comment.dt_commented}}&nbsp;
+                {% endif %}
+            <div class = "cp-avatar" style="background-image:url('{{comment.author.profile_pic.url}}')"></div>
+                <a href= "{% url 'profile' comment.author.id %}">{{comment.author.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+            {{comment.comment}}
+            {% if comment.author == user %}
+             <div><a href = "{{ comment.get_edit_url }}">&nbsp;수정</a></div>
+             <div><a href = "{{ comment.get_delete_url }}">&nbsp;삭제</a></div>
+            {% endif %}
+            </div>
+        {% endfor %}
+            </li>
+    </ul>
 </div>
 {% endblock content %}
