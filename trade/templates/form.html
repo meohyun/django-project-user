@@ -1,14 +1,10 @@
-{% extends 'kky_base/base_with_navbar.html'%}
+{% extends 'coplate_base/base_with_navbar.html'%}
 
 {% block widgets %}
-<div class = "ul">
-  <div class = "navbar li">
-    <a href = "{% url 'list' %}">족보마당</a>
-    <br>
-    <a href = "{% url 'index' %}">건의 게시판</a>
 {% endblock widgets%}
 
 {% block content %}
+<div class = "zokbo-form">
     <form method= "POST" enctype="multipart/form-data">{% csrf_token %}
     <div class= "review-form">
         <div class = 'cp-input'>
@@ -16,18 +12,33 @@
             교수명 : {{form.professor_name}}
             한줄평: {{form.content}}
         </div>  
-        <navbar>
+        <div class ="meohyun">
             평점 : {{form.grade}}
-        </navbar>
-        </div>
-        <div>
             파일올리기 : {{form.upload_files}}
+        </div>
         </div>
         <div class ="submit">
             <input type="submit" value ="작성완료">
+            <a class ="return-button" href = "{% url 'index' %}">돌아가기</a>
         </div>
-        <div class = "rating">
-            <a href = "{% url 'index' %}">돌아가기</a>
-        </div>
-    </div> 
+    </div>
+</div>
+
+<style>
+.zokbo-form {
+    margin-left : auto;
+    margin-right : auto;
+    background-color : #eee;
+    padding : 50px;
+    width : 1000px;
+}
+
+.return-button{
+    margin-left : 800px;
+}
+
+.meohyun{
+    margin-left : 100px;
+}
+</style>
 {% endblock content %}
