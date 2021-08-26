@@ -1,4 +1,4 @@
-{% extends "kky_base/base.html" %}
+{% extends "coplate_base/base.html" %}
 
 {% load static %}
 
@@ -14,6 +14,7 @@
           <li><a href="{% url 'account_logout' %}">로그아웃</a></li>
           <li><a href = "{% url 'profile' user.id %}">내 프로필</a></li>
           <li><a href = "{% url 'create' %}">족보 올리기</a></li>
+          <li><a href = "{% url 'list' %}">족보마당</a></li>
         {% else %}
           <li><a href="{% url 'account_login' %}">로그인</a></li>
           <li><a href="{% url 'account_signup' %}">회원가입</a></li>
@@ -28,13 +29,6 @@
 {% endblock content %}
 
 {% block widgets %}
-<div class = "ul">
-  <div class = "navbar li">
-    <li><a href = "{% url 'list' %}">족보마당</a></li>
-    <br>
-    <li><a href = "{% url 'index' %}">건의 게시판</a></li>
-    <br>
-    <li><a href ={% url 'create' %}>글쓰기</a></li>
 {% endblock widgets%}
 
 {% block footer %}
