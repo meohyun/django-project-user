@@ -1,16 +1,17 @@
 {% extends 'coplate_base/base_with_navbar.html'%}
 {% block content %}
 <div class = 'review-detail'>
-    <div class = "review-author">
+    <div>
+        <p class ="title">{{post.class_name}}</p>&nbsp;
+        <div class = "review-author">
             <div class = "cp-avatar" style="background-image:url('{{post.author.profile_pic.url}}')"></div>
-                <a href= "{% url 'profile' post.author.id %}">{{post.author.username}}</a>
-            </div>
-    <div class = 'review-info'>
-        <div class = 'title'>
-            <p>제목 : {{post.class_name}}</p>
-            <date class="date">날짜: {{post.dt_created|date:"Y년 n월 j일"}}</date>
+            <a href= "{% url 'profile' post.author.id %}">{{post.author.username}}</a>
+            <date id="date-time" class="date">{{post.dt_created|date:"Y년 n월 j일"}}</date>
+        </div>
+    </div>
+    <div class ="zokbo-content">
         <div>
-            <p> 교수님 성함: {{post.professor_name}}</p>
+            <p> 교수님: {{post.professor_name}}</p>
         </div>
         <div>
             <div>
@@ -21,18 +22,14 @@
                     {% endfor %}
                 </span>
             </div>
-        <div>
+        <p>
         {% if post.upload_files.url %}
             첨부파일 : <a href = "{{post.upload_files.url}}" download="{{post.upload_files.url}}">{{post.upload_files}}</a>
         {% endif %}
-
-        <div>
+        <div class= 'content'>
+            <p>수업 한줄평: {{post.content|linebreaks}}</p>
         </div>
-
-    </div>
-    <div class= 'content'>
-        <p>수업 한줄평: {{post.content|linebreaks}}</p>
-    </div>
+    </div> 
         <div class = 'footer'>
             <a href = "{% url 'index' %}">돌아가기</a>
             {% if post.author.is_authenticated %}
@@ -43,25 +40,78 @@
                 <a href = {% url 'delete' post.id %}>삭제하기</a>
             {% endif %}
         </div>
+    </div>
+    <h3>댓글창</h3>  
     <ul>
         {% for comment in post.comment_set.all %}
-            <li>
-            <div class = "review-author">
+        <div class = "cp-avatar" style="background-image:url('{{comment.author.profile_pic.url}}')"></div>
+        <a href= "{% url 'profile' comment.author.id %}">{{comment.author.username}}</a>
+        <div class ="comment-content">
+        {{comment.comment}}
+        </div>
+            <div id = "date-time">
+                <div>
+                {% if comment.author == user %}
+                    <a id ="update" href = "{{ comment.get_edit_url }}">&nbsp;수정</a>
+                    <a id ="delete" href = "{{ comment.get_delete_url }}">&nbsp;삭제</a>
+                {% endif %}
+                </div>
                 {% if comment.dt_updated %}
                     {{comment.dt_updated}}&nbsp;
                 {% else %}
                     {{comment.dt_commented}}&nbsp;
                 {% endif %}
-            <div class = "cp-avatar" style="background-image:url('{{comment.author.profile_pic.url}}')"></div>
-                <a href= "{% url 'profile' comment.author.id %}">{{comment.author.username}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
-            {{comment.comment}}
-            {% if comment.author == user %}
-             <div><a href = "{{ comment.get_edit_url }}">&nbsp;수정</a></div>
-             <div><a href = "{{ comment.get_delete_url }}">&nbsp;삭제</a></div>
-            {% endif %}
             </div>
-        {% endfor %}
-            </li>
+        {% endfor %}      
     </ul>
 </div>
+<style>
+
+.title{
+    text-align: center;
+    font-size : 25px;
+    background-color : #eee;
+}
+
+#update {
+
+    color : blue;
+}
+
+#delete{
+
+   color : red;
+}
+
+.zokbo-content{
+    background-color : #eee;
+    padding : 50px;
+}
+
+#date-time{
+    
+    margin-left : 500px;
+}
+
+ul {
+    display : block;
+    margin-top : auto;
+    background-color : #eee;
+    margin-bottom : auto;
+}
+
+.comment-content{
+    margin-top : 40px;
+    margin-bottom: 30px;
+    padding : 10px;
+}
+
+#date-time{
+    text-color : white;
+    text-weight : 400;
+}
+
+</style>
+
 {% endblock content %}
+
