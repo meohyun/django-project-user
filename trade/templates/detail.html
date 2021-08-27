@@ -1,4 +1,4 @@
-{% extends 'kky_base/base_with_navbar.html'%}
+{% extends 'coplate_base/base_with_navbar.html'%}
 {% block content %}
 <div class = 'review-detail'>
     <div>
@@ -31,7 +31,7 @@
         </div>
     </div> 
         <div class = 'footer'>
-            <a href = "{% url 'index' %}">돌아가기</a>
+            <a href = "{% url 'list' %}">돌아가기</a>
             {% if post.author.is_authenticated %}
                 <a href = "{% url 'comment-new' post.pk %}">댓글쓰기</a>
             {% endif %}
@@ -41,8 +41,8 @@
             {% endif %}
         </div>
     </div>
-    <h3>댓글창</h3>  
-    <ul>
+    <h3>댓글창</h3>
+    <ul class = "commentary">
         {% for comment in post.comment_set.all %}
         <div class = "cp-avatar" style="background-image:url('{{comment.author.profile_pic.url}}')"></div>
         <a href= "{% url 'profile' comment.author.id %}">{{comment.author.username}}</a>
@@ -65,53 +65,5 @@
         {% endfor %}      
     </ul>
 </div>
-<style>
-
-.title{
-    text-align: center;
-    font-size : 25px;
-    background-color : #eee;
-}
-
-#update {
-
-    color : blue;
-}
-
-#delete{
-
-   color : red;
-}
-
-.zokbo-content{
-    background-color : #eee;
-    padding : 50px;
-}
-
-#date-time{
-    
-    margin-left : 500px;
-}
-
-ul {
-    display : block;
-    margin-top : auto;
-    background-color : #eee;
-    margin-bottom : auto;
-}
-
-.comment-content{
-    margin-top : 40px;
-    margin-bottom: 30px;
-    padding : 10px;
-}
-
-#date-time{
-    text-color : white;
-    text-weight : 400;
-}
-
-</style>
-
 {% endblock content %}
 
