@@ -1,24 +1,76 @@
-{% extends 'coplate_base/base_with_navbar.html' %}
+{% extends 'kky_base/base_with_navbar.html' %}
 {% load static %}
 
-
+{% block css%}
+<head>
+  <link rel ="stylesheet" href ="{% static 'trade/styles/meohyun.css' %}">
+</head>
+{% endblock css%}
 {% block content %}
-{% for post in posts %}
-    <div>
-        <div class ="content-list">
-            <div class = "content">
-                <a href = "{% url 'detail' post.id %}">{{post.class_name}}</a>
-                <div class = "review-author">
+    
+    <div class ="zokbo-list">
+      <div class = "title">족보마당</div>
+    {% for post in posts %}
+        <div class = "zokbo">
+            <div>{{post.id}}<div>
+            <span id = "zokbo-title">
+              <a href = "{% url 'detail' post.id %}">{{post.class_name}}</a>
+            </span>
+            <div>
+               교수명 : {{post.professor_name}}
+            </div>
+            <div class = "review-author">
             <div class = "cp-avatar" style="background-image:url('{{post.author.profile_pic.url}}')"></div>
-        <span> {{post.author.nickname}}</span>
-    </div>
+            <div>
+              <a href = "{% url 'profile' post.author.id %}">
+                {{post.author.nickname}}
+              </a>
+              <span id = "professor">
+                {% if post.dt_updated %} 
+                  {{post.dt_updated}}
+                {% else %} 
+                  {{post.dt_created}}
+                {% endif %}
+             </span>
+            </div>
+            <br>
+            </div>
+          <hr>
+        </div>
     {% empty %}
     <p class = "body">등록된 글이 없어요!</p>
-{% endfor %}
-          <form action="{% url 'search' %}" method="post">
+    {% endfor %}
+          <form class = "search-bar" action="{% url 'search' %}" method="post">
             {% csrf_token %}
-              <input type="search" placeholder="Search" aria-label="Search" name="q" value="{{q}}">
-              <button type="submit">Search</button>
+              <input type="search" placeholder="제목을 입력하세요" aria-label="Search" name="q" value="{{q}}">
+              <button type="submit">검색</button>
           </form>
+    </div>
+    <div class ="page">
+    {% if is_paginated %}
+        <footer>
+          <ul class="pagintator-set">
+            {% if page_obj.has_previous %}
+              <span class="paginator-place"><a href="?page=1">처음</a></span>
+              <span class="paginator-place"><a href="?page={{ page_obj.previous_page_number }}">이전</a></span>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+              {% if page_obj.number == num %}
+                <span id ="paginator-current" class="paginator-place">{{ num }}</span>
+              {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <span class="paginator-place"><a href="?page={{ num }}">{{ num }}</a></span>
+              {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+              <span class="paginator-place"><a href="?page={{ page_obj.next_page_number }}">다음</a></span>
+              <span class="paginator-place"><a href="?page={{ page_obj.paginator.num_pages }}">마지막</a></span>
+            {% endif %}
+          </ul>
+        </footer>
+      {% endif %}
+    </div>
 {% endblock content %}
 <title>{% block title %}족보모음 | 국경연{% endblock title %}</title>
+
