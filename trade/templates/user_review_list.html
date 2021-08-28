@@ -1,65 +1,86 @@
-{% extends "coplate_base/base_with_navbar.html" %}
+{% extends "kky_base/base_with_navbar.html" %}
 {% load static %}
-
 {% block title %}{{profile_user.nickname}}님의 족보모음 | 국경연{% endblock title %}
-
 {% block content %}
 <main class="site-body">
+  <div class="profile-header">
+    <div class="content max-content-width">
+      <div
+        class="cp-avatar large profile-pic"
+        style="background-image: url('{{profile_user.profile_pic.url}}')"
+      ></div>
+      <span class="username">{{profile_user.nickname}}</span>
+      <div class="info">
+        {% if profile_user == user %}
+          <a class="edit" href="{% url 'profile-update' %}">
+          <img class="cp-icon small" src="{% static 'trade/icons/ic-pen.svg' %}" alt="Pen Icon">
+          프로필 수정
+          </a>
+        &#183;
+          <a class="edit" href="{% url 'account_change_password' %}">
+            비밀번호 변경
+          </a>
+        {% endif %}
+        <div>
+        {% if profile_user.intro %}
+          <p class="cp-chip intro">{{profile_user.intro}}</p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
   <div class="content-list max-content-width">
     <div class="header">
-      <h2>{{profile_user.nickname}}님의 족보 ({{paginator.count}})</h2>
+      <h2>{{profile_user.nickname}}님의 최신 족보({{paginator.count}})</h2>
     </div>
 
     <div class="contents">
-      {% for post in user_posts %}
-        <a href="{% url 'detail' post.id %}">
-            <div class="body">
-              <span class="cp-chip green">{{ post.professor_name }}</span>
-              <h2 class="title">{{ post.class_name }}</h2>
-              <date class="date">{{ post.dt_created|date:"Y년 n월 j일" }}</date>
-              <div class="metadata">
-                <div class="review-rating">
-                  <span class="cp-stars">
-                    {% for i in ""|ljust:post.grade %}★{% endfor %}
-                  </span>
-                </div>
-                <div class="review-author">
-                  <div class="cp-avatar" style="background-image: url('{{ post.author.profile_pic.url }}')"></div>
-                  <span>{{ post.author.nickname }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </a>
-      {% empty %}
-        <p class="empty">아직 리뷰가 없어요 :(</p>
-      {% endfor %}
+      {% for review in user_posts %}
+        <div class="profile-set">
+          <span class="cp-chip green">{{ review.professor_name }}</span>
+          <h2><a href="{% url 'detail' review.id %}">{{ review.class_name }}</a></h2>
+          <date class="date">{{ review.dt_created|date:"Y년 n월 j일" }}</date>
+          <div class="review-author">
+          <div
+            class="cp-avatar"
+            style="background-image: url('{{ review.author.profile_pic.url }}')"
+          ></div>
+        <span>{{ review.author.nickname }}</span>
+
+  </div>
     </div>
-
-    <div class="wrap-pagination">    
-      <a class="cp-ic-button circle backbutton" href="{% url 'profile' profile_user.id %}">프로필로 돌아가기</a>
-      {% if is_paginated %}
-        <ul class="pagination">
-          {% if page_obj.has_previous %}
-            <li><a href="?page=1">처음</a></li>
-            <li><a href="?page={{ page_obj.previous_page_number }}">이전</a></li>
-          {% endif %}
-
-          {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
-              <li class="current">{{ num }}</li>
-            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-              <li><a href="?page={{ num }}">{{ num }}</a></li>
-            {% endif %}
-          {% endfor %}
-
-          {% if page_obj.has_next %}
-            <li><a href="?page={{ page_obj.next_page_number }}">다음</a></li>
-            <li><a href="?page={{ page_obj.paginator.num_pages }}">마지막</a></li>
-          {% endif %}
-        </ul>
-      {% endif %}
+      {% empty %}
+      <p class="empty">아직 리뷰가 없어요 :(</p>
+      {% endfor %}
     </div>
   </div>
 </main>
+  <div class ="page">
+    {% if is_paginated %}
+        <footer>
+          <ul>
+            {% if page_obj.has_previous %}
+              <span><a href="?page=1">처음</a></span>
+              <span><a href="?page={{ page_obj.previous_page_number }}">이전</a></span>
+            {% endif %}
+
+            {% for num in page_obj.paginator.page_range %}
+              {% if page_obj.number == num %}
+                <span class="current">{{ num }}</span>
+              {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                <span><a href="?page={{ num }}">{{ num }}</a></span>
+              {% endif %}
+            {% endfor %}
+
+            {% if page_obj.has_next %}
+              <span><a href="?page={{ page_obj.next_page_number }}">다음</a></span>
+              <span><a href="?page={{ page_obj.paginator.num_pages }}">마지막</a></span>
+            {% endif %}
+          </ul>
+        </footer>
+      {% endif %}
+    </div>
+
+
 {% endblock content %}
