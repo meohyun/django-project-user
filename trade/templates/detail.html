@@ -45,7 +45,7 @@
     <ul class = "commentary">
         {% for comment in post.comment_set.all %}
         <div class = "cp-avatar" style="background-image:url('{{comment.author.profile_pic.url}}')"></div>
-        <a href= "{% url 'profile' comment.author.id %}">{{comment.author.username}}</a>
+            <a href= "{% url 'profile' comment.author.id %}">{{comment.author.username}}</a>
         <div class ="comment-content">
         {{comment.comment}}
         </div>

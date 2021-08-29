@@ -1,7 +1,11 @@
-<form method ='POST' action = "">
-    {% csrf_token%}
-    <table>
-    댓글 :  {{form.as_table}}
-    </table>
-    <input type = "submit">
-</form>
+{% extends 'coplate_base/base_with_navbar.html'%}
+
+{% block content %}
+    <form method ='POST' action = "">
+        {% csrf_token%}
+        <table class ="cp-input">
+            댓글 :  {{form.as_table}}
+        </table>
+        <input type = "submit">
+    </form>
+{% endblock content %}
