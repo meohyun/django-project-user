@@ -9,7 +9,7 @@
     <div class="content">
         <h1>    
         {% if user.is_authenticated %}
-            <p>안녕하세요 {{user.nickname}} 학회원님! 만나서 반가워요!</p>
+            <p>{{user.nickname}} 학회원님! 만나서 반가워요!</p>
         {% else %}
             <p>로그인을 해주세요.</p>
         {% endif %}
