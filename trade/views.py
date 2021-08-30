@@ -216,3 +216,13 @@ def search(request):
     
     else:
         return render(request, 'trade/search.html')
+
+def signout(request):
+    if request.method == 'POST':
+        request.user.delete()
+        return redirect('index')
+
+    else:
+        return render(request, 'account/signout.html')
+
+
