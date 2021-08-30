@@ -1,69 +1,72 @@
-{% extends 'kky_base/base_with_navbar.html'%}
+{% extends "coplate_base/base_with_navbar.html" %} 
+{% load static %} 
+{% block title %}{{ profile_user.nickname }} | 국경연{% endblock title %} 
 {% block content %}
-<div class = 'review-detail'>
-    <div>
-        <p class ="title">{{post.class_name}}</p>&nbsp;
-        <div class = "review-author">
-            <div class = "cp-avatar" style="background-image:url('{{post.author.profile_pic.url}}')"></div>
-            <a href= "{% url 'profile' post.author.id %}">{{post.author.username}}</a>
-            <date id="date-time" class="date">{{post.dt_created|date:"Y년 n월 j일"}}</date>
-        </div>
-    </div>
-    <div class ="zokbo-content">
-        <div>
-            <p> 교수님: {{post.professor_name}}</p>
-        </div>
-        <div>
-            <div>
-                <span>
-                    평점:
-                    {% for i in ""|ljust:post.grade %}
-                            ★
-                    {% endfor %}
-                </span>
-            </div>
-        <p>
-        {% if post.upload_files.url %}
-            첨부파일 : <a href = "{{post.upload_files.url}}" download="{{post.upload_files.url}}">{{post.upload_files}}</a>
+<main class="site-body">
+  <div class="profile-header">
+    <div class="content max-content-width">
+      <div
+        class="cp-avatar large profile-pic"
+        style="background-image: url('{{profile_user.profile_pic.url}}')"
+      ></div>
+      <span class="username">{{profile_user.nickname}}</span>
+      <div class="info">
+        {% if profile_user == user %}
+          <a class="edit" href="{% url 'profile-update' %}">
+          <img class="cp-icon small" src="{% static 'trade/icons/ic-pen.svg' %}" alt="Pen Icon">
+          프로필 수정
+          </a>
+        &#183;
+          <a class="edit" href="{% url 'account_change_password' %}">
+            비밀번호 변경
+          </a>
+        &#183;
+          <a class="edit" href="{% url 'signout' %}">
+           회원탈퇴
+          </a>
         {% endif %}
-        <div class= 'content'>
-            <p>수업 한줄평: {{post.content|linebreaks}}</p>
+        <div>
+        {% if profile_user.intro %}
+          <p class="cp-chip intro">{{profile_user.intro}}</p>
         </div>
-    </div> 
-        <div class = 'footer'>
-            <a href = "{% url 'list' %}">돌아가기</a>
-            {% if post.author.is_authenticated %}
-                <a href = "{% url 'comment-new' post.pk %}">댓글쓰기</a>
-            {% endif %}
-            {% if post.author == user %}
-                <a href = {% url 'update' post.id %}>수정하기</a>
-                <a href = {% url 'delete' post.id %}>삭제하기</a>
-            {% endif %}
-        </div>
+        {% endif %}
+      </div>
     </div>
-    <h3>댓글창</h3>
-    <ul class = "commentary">
-        {% for comment in post.comment_set.all %}
-        <div class = "cp-avatar" style="background-image:url('{{comment.author.profile_pic.url}}')"></div>
-            <a href= "{% url 'profile' comment.author.id %}">{{comment.author.username}}</a>
-        <div class ="comment-content">
-        {{comment.comment}}
-        </div>
-            <div id = "date-time">
-                <div>
-                {% if comment.author == user %}
-                    <a id ="update" href = "{{ comment.get_edit_url }}">&nbsp;수정</a>
-                    <a id ="delete" href = "{{ comment.get_delete_url }}">&nbsp;삭제</a>
-                {% endif %}
-                </div>
-                {% if comment.dt_updated %}
-                    {{comment.dt_updated}}&nbsp;
-                {% else %}
-                    {{comment.dt_commented}}&nbsp;
-                {% endif %}
-            </div>
-        {% endfor %}      
-    </ul>
-</div>
-{% endblock content %}
+  </div>
 
+  <div class="content-list max-content-width">
+    <div class="header">
+      <h2>{{profile_user.nickname}}님의 최신 족보</h2>
+      {% if user_posts %}
+        <a class="cp-ic-button after circle morereview" href="{% url 'user-review-list' profile_user.id %}">
+        리뷰 전체보기
+      {% endif %}
+      </a>
+    </div>
+
+    <div class="contents" width ="90%">
+      {% for review in user_posts %}
+      <a href="{% url 'detail' review.id %}">
+          <div class="profile-set">
+            <span class="cp-chip green">{{ review.professor_name }}</span>
+            <h2>{{ review.class_name }}</h2>
+            <date class="date">{{ review.dt_created|date:"Y년 n월 j일" }}</date>
+            <div class="metadata">
+              <div class="review-author">
+                <div
+                  class="cp-avatar"
+                  style="background-image: url('{{ review.author.profile_pic.url }}')"
+                ></div>
+                <span>{{ review.author.nickname }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+      {% empty %}
+      <p class="empty">아직 리뷰가 없어요 :(</p>
+      {% endfor %}
+    </div>
+  </div>
+</main>
+{% endblock content %}
