@@ -1,3 +1,6 @@
+{% extends 'coplate_base/base_with_navbar.html' %}
+
+{% block content%}
 <h1>이메일 인증이 완료되었습니다.</h1>
 
 
@@ -8,3 +11,4 @@
     <a href = "{% url 'account_login' %}">로그인 이동</a>
 
 {% endif %}
+{% endblock content %}
