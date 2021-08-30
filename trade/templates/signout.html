@@ -1,0 +1,9 @@
+{% extends 'coplate_base/base_with_navbar.html' %}
+
+{% block content %}
+<h1> 정말 회원탈퇴 하시겠습니까?</h1>
+<form class="cp-dialog review-confirm-delete" method="post">{% csrf_token %}
+    <button class="cp-button warn" type="submit">삭제</button>
+    <a class="cp-button secondary" href="{% url 'index' %}">취소</a>
+</form>
+{% endblock content %}
