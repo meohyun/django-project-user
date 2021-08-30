@@ -1,3 +1,4 @@
+
 h1 {
     text-align : center;
     margin-top : 300px;
@@ -6,11 +7,9 @@ h1 {
 .title{
     text-align: center;
     font-size : 25px;
-    background-color : #eee;
 }
 
 #update {
-
     color : blue;
 }
 
@@ -31,7 +30,7 @@ h1 {
 
 .commentary {
     display : block;
-    margin-top : auto;
+    margin-top : 50px;
     background-color : #eee;
     margin-bottom : auto;
 }
@@ -97,10 +96,77 @@ h1 {
 
 .search-bar{
     padding : 20px;
-    margin-left : 300px;
+    margin-left : 350px;
     margin-right : auto;
+    margin-top : 100px;
 }
 
 .profile-set{
     margin-top : 50px;
+}
+
+.Jua{
+    font-family : "Jua";
+}
+
+.profile_set{
+    display : block;
+    padding : 50px;
+    margin-left :auto;
+    margin-right :auto;
+}
+
+.profile_title{
+    display : block;
+    font-size: 20px;
+    margin-left :auto;
+    margin-right :auto;
+    text-align : center;
+    margin-top : 50px;
+    margin-bottom : 50px;
+}
+
+.zokbo-list .title {
+    margin-top : 50px;
+    color : #E3A543;
+}
+
+.pagintator-set{
+    text-align : center;
+}
+
+.paginator-place{
+    margin-left :10px;
+}
+
+#paginator-current{
+    color : blue;
+}
+
+.comment-id{
+    margin-top : 50px;
+}
+
+.comment-create{
+    margin-left: auto;
+    margin-right: auto;
+    color : red;
+}
+
+.footer-logo{
+    text-align : right;
+    margin-left : 600px;
+    
+}
+
+.footer-image{
+    display : block;
+    width : 50px;
+    height : 50px;
+    
+}
+
+.user-name{
+    color : goldenrod;
+    font-size: 30px;
 }
