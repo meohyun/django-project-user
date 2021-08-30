@@ -31,5 +31,8 @@ urlpatterns = [
     path('comments/<int:post_pk>',views.comment_new,name='comment-new'),
     path('comments/<int:post_pk>/edit/<int:pk>',views.comment_update,name='comment-update'),
     path('comments/<int:post_pk>/delete/<int:pk>',views.comment_delete,name='comment-delete'),
+    
+    # signout
+    path('delete/user',views.signout,name="signout"),
 ]
 
