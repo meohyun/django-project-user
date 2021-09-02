@@ -1,8 +1,17 @@
 {% extends 'coplate_base/base_with_navbar.html'%}
+{% load static %}
 {% block content %}
 <div class = 'review-detail'>
     <div>
         <p class ="title">{{post.class_name}}</p>&nbsp;
+        <p>좋아요 수 : {{post.like_count}}</p>
+        <a href = {% url 'post-like' post.id %}>
+            {% if post in user.author.like_count.all %}
+                <img src = "{% static 'trade/assets/empty-heart.PNG' %}">
+            {% else %}
+                <img src = "{% static 'trade/assets/heart.PNG' %}">
+            {% endif %}
+        </a>
         <div class = "review-author">
             <div class = "cp-avatar" style="background-image:url('{{post.author.profile_pic.url}}')"></div>
             <a href= "{% url 'profile' post.author.id %}">{{post.author.username}}</a>
