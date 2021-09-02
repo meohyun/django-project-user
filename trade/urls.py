@@ -11,6 +11,7 @@ urlpatterns = [
         'email_confirmation_done/',
         views.TemplateView.as_view(template_name='account/email_confirmation_done.html'),
         name = 'confirmation_done'),
+    # zokbo
     path('zokbo/<int:pk>/',views.DetailZokboView.as_view(),name='detail'),
     path('zokbo_upoload/',views.CreateZokboView.as_view(),name ='create'),
     path('zokbo/<int:pk>/update',views.UpdateZokboView.as_view(),name ='update'),
@@ -31,8 +32,11 @@ urlpatterns = [
     path('comments/<int:post_pk>',views.comment_new,name='comment-new'),
     path('comments/<int:post_pk>/edit/<int:pk>',views.comment_update,name='comment-update'),
     path('comments/<int:post_pk>/delete/<int:pk>',views.comment_delete,name='comment-delete'),
-    
+
     # signout
     path('delete/user',views.signout,name="signout"),
+
+    # like
+    path('post-like/<int:post_id>/',views.post_like,name="post-like"),
 ]
 
