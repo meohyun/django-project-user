@@ -37,6 +37,10 @@ class User(AbstractUser):
         blank = True
     )
 
+    like_posts = models.ManyToManyField(
+        'Post', blank=True, related_name='like_users'
+        )
+  
     def __str__(self):
         return self.email
 
@@ -58,7 +62,7 @@ class Post(models.Model):
     dt_updated = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User,on_delete=models.CASCADE )
     upload_files = models.FileField(upload_to='zokbo')
-    
+    like_count = models.PositiveIntegerField(default=0)
 
 
     def __str__(self):
@@ -67,12 +71,12 @@ class Post(models.Model):
 
 
 class Comment(models.Model):
-    comment = models.TextField()
+    comment = models.CharField(max_length=60)
     dt_commented = models.DateTimeField(auto_now_add=True)
     dt_updated = models.DateTimeField(auto_now=True)
     post = models.ForeignKey(Post,on_delete= models.CASCADE)
     author = models.ForeignKey(User,on_delete= models.CASCADE)
-    
+
     def __str__(self):
         return self.comment
 
