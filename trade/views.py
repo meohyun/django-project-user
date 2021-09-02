@@ -224,5 +224,23 @@ def signout(request):
 
     else:
         return render(request, 'account/signout.html')
+   
+def post_like(request,post_id):
+    post = get_object_or_404(Post,id=post_id)
+    current_user = request.user
+    like_user = User.objects.get(pk=current_user.pk)
+
+    check_like = like_user.like_posts.filter(id=post_id)
+
+    if check_like.exists():
+        like_user.like_posts.remove(post)
+        post.like_count -= 1
+        post.save()
+    else:
+        like_user.like_posts.add(post)
+        post.like_count += 1
+        post.save()
+
+    return redirect('detail',post_id)
 
 
