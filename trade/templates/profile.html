@@ -50,6 +50,7 @@
           <div class="profile-set">
             <span class="cp-chip green">{{ review.professor_name }}</span>
             <h2>{{ review.class_name }}</h2>
+            <p>좋아요: {{review.like_count}}</p>
             <date class="date">{{ review.dt_created|date:"Y년 n월 j일" }}</date>
             <div class="metadata">
               <div class="review-author">
