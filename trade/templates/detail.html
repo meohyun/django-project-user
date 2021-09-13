@@ -4,13 +4,19 @@
 <div class = 'review-detail'>
     <div>
         <p class ="title">{{post.class_name}}</p>&nbsp;
-        <p>좋아요 수 : {{post.like_count}}</p>
-        <a href = {% url 'post-like' post.id %}>
-            {% if post in user.author.like_count.all %}
-                <img src = "{% static 'trade/assets/empty-heart.PNG' %}">
+            {% if user in post.like_users.all %}
+                <p>{{post.like_count}}명이 좋아합니다.</p>
+                <a href = {% url 'post-like' post.id %}>
+                    <img src = "{% static 'trade/assets/heart.PNG' %}">
+                </a>
             {% else %}
-                <img src = "{% static 'trade/assets/heart.PNG' %}">
+                <a href = {% url 'post-like' post.id %}>
+                    <img src = "{% static 'trade/assets/empty-heart.PNG' %}">
+                </a>
             {% endif %}
+            <a href = "{% url 'comment-new' post.id %}">
+                <img src = "{% static 'trade/assets/comment.PNG' %}">
+            </a>
         </a>
         <div class = "review-author">
             <div class = "cp-avatar" style="background-image:url('{{post.author.profile_pic.url}}')"></div>
@@ -42,7 +48,6 @@
         <div class = 'footer'>
             <a href = "{% url 'list' %}">돌아가기</a>
             {% if post.author.is_authenticated %}
-                <a href = "{% url 'comment-new' post.pk %}">댓글쓰기</a>
             {% endif %}
             {% if post.author == user %}
                 <a href = {% url 'update' post.id %}>수정하기</a>
