@@ -12,6 +12,7 @@ from django.urls import reverse
 from django.http import HttpResponse,HttpResponseRedirect
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 from trade.models import Post,User,Comment
 from trade.forms import PostForm,ProfileForm,CommentForm
 from allauth.account.views import PasswordChangeView
@@ -34,13 +35,43 @@ class IndexView(ListView):
 class ListZokboView(ListView):
     model = Post
     context_object_name = 'posts'
-    paginate_by = 4
+    paginate_by = 6
     ordering = ['-dt_created']
-    
 
-class DetailZokboView(DetailView):
+
+class DetailZokboView(LoginRequiredMixin,DetailView):
     model = Post
+    form_class = CommentForm
     template_name = 'trade/detail.html'
+
+    redirect_unauthenticated_users = True
+
+    def detail(request, pk,post_pk):
+        blog_detail = get_object_or_404(Post, pk= pk)
+        comments = Comment.objects.filter(pk=post_pk)
+
+        if request.method == 'POST':
+            comment_form = CommentForm(request.POST)
+
+            if comment_form.is_valid():
+                content = comment_form.cleaned_data['comment']
+                # comment_form.save()
+                print(content)
+
+                return redirect('detail',blog_detail.id)
+
+        else:
+            comment_form = CommentForm()
+
+            context = {
+                'blog_detail': blog_detail,
+                'comments':comments,
+                'comment_form': comment_form
+            }
+            # 딕셔너리 자료형을 활용해 값 전달
+
+            return render(request,'trade/detail.html',context)
+    
 
     
 class CreateZokboView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
@@ -71,7 +102,8 @@ class CreateZokboView(LoginRequiredMixin,UserPassesTestMixin,CreateView):
         else:
             form = PostForm()
         return render(request, 'detail.html', {'form': form})
-        
+
+
 class UpdateZokboView(LoginRequiredMixin,UserPassesTestMixin,UpdateView):
     model = Post
     form_class = PostForm
@@ -109,7 +141,7 @@ class ProfileView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user_id = self.kwargs.get('user_id')
-        context['user_posts'] = Post.objects.filter(author_id=user_id).order_by('-dt_created')[:4]
+        context['user_posts'] = Post.objects.filter(author_id=user_id).order_by('-dt_created')[:2]
         return context
 
 class UserReviewListView(ListView):
@@ -132,6 +164,7 @@ class ProfileSetView(LoginRequiredMixin,UpdateView):
     model = User
     form_class = ProfileForm
     template_name = 'trade/profile_set_form.html'
+    paginate_by = 4
 
     def get_object(self,queryset=None):
         return self.request.user
@@ -153,7 +186,6 @@ class ProfileUpdateView(LoginRequiredMixin,UpdateView):
 class CustomPasswordChangeView(LoginRequiredMixin,PasswordChangeView):
     def get_success_url(self):
         return reverse('profile',kwargs={'user_id':self.request.user.id})
-
 
 
 # comment 
@@ -217,6 +249,7 @@ def search(request):
     else:
         return render(request, 'trade/search.html')
 
+
 def signout(request):
     if request.method == 'POST':
         request.user.delete()
@@ -224,13 +257,14 @@ def signout(request):
 
     else:
         return render(request, 'account/signout.html')
-   
+
 def post_like(request,post_id):
     post = get_object_or_404(Post,id=post_id)
     current_user = request.user
     like_user = User.objects.get(pk=current_user.pk)
 
     check_like = like_user.like_posts.filter(id=post_id)
+
 
     if check_like.exists():
         like_user.like_posts.remove(post)
@@ -244,3 +278,14 @@ def post_like(request,post_id):
     return redirect('detail',post_id)
 
 
+def change_password(request):
+    
+    if request.method == 'POST':
+        pass
+    else:
+        form = PasswordChangeForm(request.user)
+    context = {
+        'form': form,
+    }
+    return render(request,'account/change-password.html',context)
+    
