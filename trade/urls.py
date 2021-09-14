@@ -40,6 +40,7 @@ urlpatterns = [
     path('post-like/<int:post_id>/',views.post_like,name="post-like"),
 
     # password
-    path('password_change/',views.change_password,name='password-change')
+    path('passwords_change/',views.change_password,name='password-change'),
+    path('change-complete/',views.change_complete,name='complete')
 ]
 
