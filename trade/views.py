@@ -11,8 +11,10 @@ from django.views.generic import (
 from django.urls import reverse
 from django.http import HttpResponse,HttpResponseRedirect
 from django.conf import settings
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import PasswordChangeForm
+from django.contrib.auth.views import PasswordChangeView
 from trade.models import Post,User,Comment
 from trade.forms import PostForm,ProfileForm,CommentForm
 from allauth.account.views import PasswordChangeView
@@ -278,14 +280,19 @@ def post_like(request,post_id):
     return redirect('detail',post_id)
 
 
+
 def change_password(request):
     
     if request.method == 'POST':
-        pass
+        form = PasswordChangeForm(user=request.user,data=request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request,form.user)
+            return render(request,'account/change-complete.html')
     else:
-        form = PasswordChangeForm(request.user)
-    context = {
-        'form': form,
-    }
+        form = PasswordChangeForm(user=None)
+    context = {'form' :form }
     return render(request,'account/change-password.html',context)
-    
+
+def change_complete():
+    pass
