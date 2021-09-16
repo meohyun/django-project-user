@@ -17,7 +17,7 @@
           프로필 수정
           </a>
         &#183;
-          <a class="edit" href="{% url 'account_change_password' %}">
+          <a class="edit" href="{% url 'password-change' %}">
             비밀번호 변경
           </a>
         &#183;
@@ -39,18 +39,20 @@
       <h2>{{profile_user.nickname}}님의 최신 족보</h2>
       {% if user_posts %}
         <a class="cp-ic-button after circle morereview" href="{% url 'user-review-list' profile_user.id %}">
-        리뷰 전체보기
+        족보 전체보기
       {% endif %}
       </a>
     </div>
-
+    
     <div class="contents" width ="90%">
       {% for review in user_posts %}
       <a href="{% url 'detail' review.id %}">
           <div class="profile-set">
             <span class="cp-chip green">{{ review.professor_name }}</span>
             <h2>{{ review.class_name }}</h2>
-            <p>{{post.like_count}}명이 좋아합니다.</p>
+            {% if review.like_count %}
+              <p>{{review.like_count}}명이 좋아합니다.</p>
+            {% endif %}
             <date class="date">{{ review.dt_created|date:"Y년 n월 j일" }}</date>
             <div class="metadata">
               <div class="review-author">
@@ -65,7 +67,7 @@
         </div>
       </a>
       {% empty %}
-      <p class="empty">아직 리뷰가 없어요 :(</p>
+      <p class="empty">아직 족보가 없어요 :(</p>
       {% endfor %}
     </div>
   </div>
