@@ -10,6 +10,7 @@
                     <img src = "{% static 'trade/assets/heart.PNG' %}">
                 </a>
             {% else %}
+                <p>{{post.like_count}}명이 좋아합니다.</p>
                 <a href = {% url 'post-like' post.id %}>
                     <img src = "{% static 'trade/assets/empty-heart.PNG' %}">
                 </a>
@@ -27,6 +28,7 @@
     <div class ="zokbo-content">
         <div>
             <p> 교수님: {{post.professor_name}}</p>
+            <p> 학년: {{post.grade_num}}학년 {{post.semester}}학기</p>
         </div>
         <div>
             <div>
@@ -59,7 +61,7 @@
     <ul class = "commentary">
         {% for comment in post.comment_set.all %}
         <div class = "cp-avatar" style="background-image:url('{{comment.author.profile_pic.url}}')"></div>
-            <a href= "{% url 'profile' comment.author.id %}">{{comment.author.username}}</a>
+            <a href= "{% url 'profile' comment.author.id %}">{{comment.author.nickname}}</a>
         <div class ="comment-content">
         {{comment.comment}}
         </div>
@@ -76,6 +78,7 @@
                     {{comment.dt_commented}}&nbsp;
                 {% endif %}
             </div>
+            <hr>
         {% endfor %}      
     </ul>
 </div>
