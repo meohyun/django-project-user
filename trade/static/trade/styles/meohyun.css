@@ -178,5 +178,10 @@ h1 {
 }
 
 .comment-content{
-    margin: 80px auto 340px;
+    margin: 20px auto 20px;
+}
+
+.download{
+    color : blue;
+    font-size : 16px;
 }
