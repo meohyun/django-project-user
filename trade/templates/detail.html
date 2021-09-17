@@ -22,7 +22,15 @@
         <div class = "review-author">
             <div class = "cp-avatar" style="background-image:url('{{post.author.profile_pic.url}}')"></div>
             <a href= "{% url 'profile' post.author.id %}">{{post.author.username}}</a>
-            <date id="date-time" class="date">{{post.dt_created|date:"Y년 n월 j일"}}</date>
+            {% if post.dt_updated %}
+                <date id="date-time" class="date">
+                생성일 : {{post.dt_created|date:"Y년 n월 j일"}}
+                <br>
+                수정일 : {{post.dt_updated|date:"Y년 n월 j일"}}
+                </date>
+            {% else %}
+                <date id="date-time" class="date">생성일 : {{post.dt_created|date:"Y년 n월 j일"}}</date>
+            {% endif %}
         </div>
     </div>
     <div class ="zokbo-content">
