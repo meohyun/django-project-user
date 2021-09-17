@@ -56,14 +56,25 @@ class Post(models.Model):
         (5,'★★★★★'),
     ]
     grade = models.IntegerField(choices=GRADE_CHOICE,default=None)
-    
+    grade_nums = [
+        (1,1),
+        (2,2),
+        (3,3),
+        (4,4),
+    ]
+    semester_choices = [
+        (1,1),
+        (1,2),
+    ]
+    grade_num = models.IntegerField(choices=grade_nums,default = None,null=True)
+    semester = models.IntegerField(choices=semester_choices,default=None,null =True)
+
     content = models.CharField(max_length=50)
     dt_created = models.DateTimeField(auto_now_add=True)
     dt_updated = models.DateTimeField(auto_now=True)
     author = models.ForeignKey(User,on_delete=models.CASCADE )
     upload_files = models.FileField(upload_to='zokbo')
     like_count = models.PositiveIntegerField(default=0)
-
 
     def __str__(self):
         return self.class_name
