@@ -1,4 +1,4 @@
-{% extends "coplate_base/base.html" %}
+{% extends "kky_base/base.html" %}
 
 {% load static %}
 {% load widget_tweaks %}
@@ -8,7 +8,7 @@
 {% block content %}
 <div class="account-background">
   <main class="account">
-    <div class="title">
+    <div class="kky_logo">
       <a href="{% url 'index' %}">
         <img class="logo" src="{% static 'trade/assets/kky-logo.jpg' %}" alt="kky Logo">
       </a>
@@ -19,18 +19,6 @@
       <div>
         {{form.email|add_class:"cp-input"|attr:"placeholder:이메일"|add_error_class:"error"}}
         {% for error in form.email.errors %}
-          <div class = "error-message">{{error}}</div>
-        {% endfor %}
-      </div>
-      <div>
-        {{form.nickname|add_class:"cp-input"|attr:"placeholder: 닉네임"|add_error_class:"error"}}
-        {% for error in form.nickname.errors %}
-          <div class = "error-message">{{error}}</div>
-        {% endfor %}
-      </div>
-      <div>
-        {{form.student_number|add_class:"cp-input"|attr:"placeholder: 학번을 입력하세요."|add_error_class:"error"}}
-        {% for error in form.student_number.errors %}
           <div class = "error-message">{{error}}</div>
         {% endfor %}
       </div>
