@@ -1,4 +1,7 @@
-{% extends "coplate_base/base.html" %}
+{% extends "kky_base/base.html" %}
+
+{% load socialaccount %}
+{% providers_media_js %}
 
 {% load static %}
 {% load widget_tweaks %}
@@ -8,7 +11,7 @@
 {% block content %}
 <div class="account-background">
   <main class="account">
-    <div class="title">
+    <div class="kky_logo">
       <a href="{% url 'index' %}">
         <img class="logo" src="{% static 'trade/assets/kky-logo.jpg' %}" alt="kky Logo">
       </a>
@@ -37,6 +40,7 @@
     <div class="info">
       <a class="item" href="{% url 'account_reset_password' %}">비밀번호 찾기</a>
       <a class="item" href="{% url 'account_signup' %}">회원가입</a>
+      <a class="item" href="{% provider_login_url 'google' %}">구글 로그인</a>
     </div>
   </main>
 </div>
