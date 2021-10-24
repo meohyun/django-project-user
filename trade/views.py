@@ -133,7 +133,7 @@ class DeleteZokboView(LoginRequiredMixin,UserPassesTestMixin,DeleteView):
         review = self.get_object()
         return review.author == user
 
-class ProfileView(DetailView):
+class ProfileView(LoginRequiredMixin,DetailView):
     model = User
     template_name = 'trade/profile.html'
     pk_url_kwarg = 'user_id'
@@ -146,7 +146,7 @@ class ProfileView(DetailView):
         context['user_posts'] = Post.objects.filter(author_id=user_id).order_by('-dt_created')[:2]
         return context
 
-class UserReviewListView(ListView):
+class UserReviewListView(LoginRequiredMixin,ListView):
     model = Post
     template_name = 'trade/user_review_list.html'
     context_object_name = 'user_posts'
