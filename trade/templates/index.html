@@ -7,9 +7,10 @@
 <div class="account-background">
   <main class="content-list">
     <div class="content">
-        <h1>    
+        <h1 class ="Jua">    
         {% if user.is_authenticated %}
             <p>{{user.nickname}} 학회원님! 만나서 반가워요!</p>
+            <p>족보마당에서 다양한 족보를 다운 받아보세요!</p>
         {% else %}
             <p>로그인을 해주세요.</p>
         {% endif %}
