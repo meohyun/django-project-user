@@ -590,5 +590,3 @@ def change_password(request):
     context = {'form' :form }
     return render(request,'account/change-password.html',context)
 
-def change_complete():
-    pass
