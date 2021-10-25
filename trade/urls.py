@@ -41,6 +41,5 @@ urlpatterns = [
 
     # password
     path('passwords_change/',views.change_password,name='password-change'),
-    path('change-complete/',views.change_complete,name='complete')
 ]
 
